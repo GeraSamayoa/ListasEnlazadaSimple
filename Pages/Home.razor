@@ -1,4 +1,4 @@
-﻿@* @page "/Home"
+﻿@*@page "/Home"
 @using Listas.Services
 @using Listas.Models
 
@@ -285,4 +285,81 @@
 		nodosAux.Clear();
             ListaEnlazadaSimple.RecorrerRecursivamente(Lista.PrimerNodo, nodosAux);
 	}
-} *@
+} 
+
+@page "/"
+@using Listas.Services
+@using Listas.Models
+
+
+
+<PageTitle>Home</PageTitle>
+
+<input type="text" class="form-control mb-2" @bind="Informacion" />
+
+<button class="btn btn-success" @onclick="AgregarNodoFinal">
+	Agregar Nodo Al final
+</button>
+
+<button class="btn btn-primary" @onclick="AgregarNodoInicio">
+	Agregar Nodo Al Inicio
+</button>
+<input type="number" class="form-control mb-2" @bind="PosicionEliminar" placeholder="Posición para eliminar" />
+<button class="btn btn-danger" @onclick="EliminarNodoEnPosicion">
+	Eliminar Nodo en la Posición
+</button>
+
+<hr />
+
+<p class="bg-dark text-white">@Mensaje</p>
+
+<hr />
+
+<ul>
+	@foreach (var item in Lista)
+	{
+		<li>@item</li>
+	}
+</ul>
+
+
+
+@code{
+
+	public string Informacion { get; set; }
+	public int Posicion { get; set; }
+	public int PosicionEliminar { get; set; }
+
+	public ListaEnlazadaSimple Lista { get; set; } = new();
+
+	string Mensaje = string.Empty;
+
+	void AgregarNodoFinal()
+	{
+		Nodo nuevoNodo = new Nodo(Informacion);
+		Mensaje = Lista.AgregarNodoAlFinal(nuevoNodo);
+		Informacion = string.Empty;
+	}
+
+	void AgregarNodoInicio()
+	{
+		Nodo nuevoNodo = new Nodo(Informacion);
+		Mensaje = Lista.AgregarNodoAlInicio(nuevoNodo);
+		Informacion = string.Empty;
+	}
+	void EliminarNodoEnPosicion()
+	{
+		try
+		{
+			Mensaje = Lista.EliminarNodoEnPosicion(PosicionEliminar);
+			PosicionEliminar = 0;
+		}
+		catch (Exception ex)
+		{
+			Mensaje = ex.Message;
+		}
+
+	}
+		
+}
+*@

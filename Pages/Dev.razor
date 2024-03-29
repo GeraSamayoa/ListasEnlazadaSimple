@@ -13,6 +13,12 @@
 <button class="btn btn-primary" @onclick="AgregarNodoInicio">
     Agregar Nodo Al Inicio
 </button>
+<!-- Input para ingresar la posición del nodo a eliminar -->
+<input type="number" class="form-control mb-2" @bind="PosicionEliminar" placeholder="Posición para eliminar" />
+<!-- Botón para activar la función de eliminar nodo en la posición -->
+<button class="btn btn-danger" @onclick="EliminarNodoEnPosicion">
+	Eliminar Nodo en la Posición
+</button>
 
 <hr />
 
@@ -32,6 +38,7 @@
     public string Informacion { get; set; }
 
     public ListaEnlazadaSimple Lista { get; set; } = new();
+    public int PosicionEliminar { get; set; }
 
     string Mensaje = string.Empty;
 
@@ -52,7 +59,21 @@
 
         this.Informacion = string.Empty;
     }
+    void EliminarNodoEnPosicion()
+    {
+        try
+        {
+            // Llama al método EliminarNodoEnPosicion de la lista y guarda el mensaje retornado
+            Mensaje = Lista.EliminarNodoEnPosicion(PosicionEliminar);
 
-
-
+            // Restablece la variable PosicionEliminar a cero después de eliminar el nodo en la posición que se deseó
+            PosicionEliminar = 0;
+        }
+        catch (Exception ex)
+        {
+            // Si se produce una excepción durante la eliminación del nodo, captura el mensaje de la excepción
+            Mensaje = ex.Message;
+        }
+    }
 }
+
