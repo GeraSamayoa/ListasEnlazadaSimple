@@ -14,6 +14,10 @@
     Agregar Nodo Al Inicio
 </button>
 
+<button class="btn btn-primary" @onclick="EliminarNodoInicio">
+    Eliminar al inicio
+</button>
+
 <hr />
 
 <p class="bg-dark text-white">@Mensaje</p>
@@ -53,6 +57,9 @@
         this.Informacion = string.Empty;
     }
 
-
+    void EliminarNodoInicio()
+    {
+        Mensaje = Lista.EliminarAlInicio();
+    }
 
 }

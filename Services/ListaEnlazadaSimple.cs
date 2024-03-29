@@ -67,5 +67,27 @@ namespace Listas.Services
 			}
 
 		}
+
+		public string EliminarAlInicio()
+		{
+			if(ListaVacia()) 
+			{ 
+				return "La lista no cuenta con elementos";
+			}
+			else if(PrimerNodo == UltimoNodo)
+			{
+				PrimerNodo = null;
+				UltimoNodo= null;
+			}
+			else
+			{
+                Nodo nodoTemporal;
+
+                nodoTemporal = PrimerNodo;
+                PrimerNodo = PrimerNodo.Referencia;
+                nodoTemporal = null;
+            }
+            return "Se ha eliminado el primer nodo de la lista con exito";
+        }
 	}
 }
