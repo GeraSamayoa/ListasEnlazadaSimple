@@ -86,8 +86,8 @@ namespace Listas.Services
             }
 
             // Inicializar variables para recorrer la lista
-            Nodo nodoActual = PrimerNodo;  // Nodo actual iniciado desde el primer nodo
-            Nodo nodoAnterior = null;      // Nodo anterior inicializado como nulo, se usará para mantener la referencia al nodo anterior durante el recorrido
+            Nodo? nodoActual = PrimerNodo;  // Nodo actual iniciado desde el primer nodo
+            Nodo? nodoAnterior = null;      // Nodo anterior inicializado como nulo, se usará para mantener la referencia al nodo anterior durante el recorrido
             int index = 1;                 // Índice para mantener el seguimiento de la posición actual en la lista
 
             // Recorrer la lista hasta encontrar la posición deseada o hasta el final de la lista.
