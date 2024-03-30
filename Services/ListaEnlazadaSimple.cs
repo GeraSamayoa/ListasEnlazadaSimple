@@ -219,8 +219,70 @@ namespace Listas.Services
 			return null;
 		}
 
-		// Metodo para recorrer la lista recursivamente
-		public static void RecorrerRecursivamente(Nodo? nodo, List<Nodo> nodos)
+		// Metodo para ordenar en orden alfabetico la lista
+		public string OrdenarLista()
+		{
+
+			try
+			{
+				// Se verifica si la lista está vacía
+				if (ListaVacia())
+				{
+					return "La lista está vacía";
+
+				}
+				// Se verifica si la lista tiene un solo nodo
+				else if (PrimerNodo?.Referencia == null)
+				{
+					return "La lista tiene un solo nodo, no hay suficientes datos para ordenar";
+				}
+
+				// Se inicializan los nodos auxiliares
+				Nodo? nodoActual = PrimerNodo;
+				Nodo? nodoSiguiente = null;
+				// Se inicializa una variable temporal de tipo object ya que la lista puede contener cualquier tipo de dato
+				object? temp;
+
+				// Se recorre verificando si el nodo actual es diferente de nulo, asi se cambia solo la informacion del primer nodo sin cambiar la referencia
+				while (nodoActual != null)
+				{
+					// Se asigna el nodo siguiente del nodo actual a la variable nodoSiguiente
+					nodoSiguiente = nodoActual.Referencia;
+
+					// Se recorre verificando si el nodo siguiente es diferente de nulo, asi hasta llegar al ultimo nodo y guardar la informacion menor en el primer nodo sin cambiar su referencia 
+					while (nodoSiguiente != null)
+					{
+						// Se compara si el valor del nodo actual es mayor al valor del nodo siguiente para intercambiarlos
+						if (String.Compare(nodoActual.Informacion?.ToString(), nodoSiguiente.Informacion?.ToString()) > 0)
+						{
+							// Se intercambian los valores de los nodos actual y siguiente
+							temp = nodoActual.Informacion;
+							// Se asigna el valor del nodo siguiente al nodo actual
+							nodoActual.Informacion = nodoSiguiente.Informacion;
+							// Se asigna el valor del nodo actual al nodo siguiente
+							nodoSiguiente.Informacion = temp;
+						}
+
+						// Se asigna el nodo siguiente al siguiente nodo para seguir recorriendo la lista
+						nodoSiguiente = nodoSiguiente.Referencia;
+					}
+
+					// Se asigna al nodoActual el siguiente nodo para seguir recorriendo la lista, para pasar al siguiente nodo y asi guardar la informacion menor en el segundo nodo sin cambiar su referencia
+					nodoActual = nodoActual.Referencia;
+				}
+			}
+			catch (Exception e)
+			{
+				return ("Error: " + e.Message);
+			}
+
+			// Se retorna un mensaje indicando que la lista ha sido ordenada correctamente
+			return "La lista ha sido ordenada correctamente";
+
+		}
+
+	// Metodo para recorrer la lista recursivamente
+	public static void RecorrerRecursivamente(Nodo? nodo, List<Nodo> nodos)
 		{
 			if (nodo != null)
 			{
