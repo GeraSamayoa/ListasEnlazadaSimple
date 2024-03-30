@@ -1,0 +1,78 @@
+﻿@page "/eliminar-nodo"
+
+@using Listas.Models
+@using Listas.Services
+@inject ListaEnlazadaSimple lista
+
+<h3>Eliminar Nodo</h3>
+
+<p>Lista de Nodos:</p>
+<ul>
+    @foreach (Nodo nodo in lista)
+    {
+        <li>@nodo.Informacion</li>
+    }
+</ul>
+
+<div>
+    <label>Posición del Nodo a Eliminar:</label>
+    <input type="number" @bind="posicion" />
+    <button @onclick="EliminarNodoEnPosicion">Eliminar</button>
+</div>
+
+@if (!mensaje.Equals(""))
+{
+    <div>@mensaje</div>
+}
+
+@code {
+    private int posicion;
+    private string mensaje = "";
+
+    private void EliminarNodoEnPosicion()
+    {
+        if (lista.ListaVacia())
+        {
+            mensaje = "La lista está vacía";
+            return;
+        }
+
+        Nodo? nodoActual = lista.PrimerNodo;
+        Nodo? nodoAnterior = null;
+        int contador = 1;
+
+        while (nodoActual != null)
+        {
+            if (contador == posicion)
+            {
+                if (lista.PrimerNodo == lista.UltimoNodo)
+                {
+                    if (posicion > 2)
+                    {
+                        mensaje = "La lista cuenta con un solo elemento";
+                        return;
+                    }
+                    else if (posicion == 2)
+                    {
+                        lista.PrimerNodo = null;
+                        lista.UltimoNodo = null;
+                        mensaje = "Se ha eliminado el nodo en la posición especificada";
+                        return;
+                    }
+                }
+                else
+                {
+                    nodoAnterior!.Referencia = nodoActual.Referencia;
+                    mensaje = "Se ha eliminado el nodo en la posición especificada";
+                    return;
+                }
+            }
+
+            nodoAnterior = nodoActual;
+            nodoActual = nodoActual.Referencia;
+            contador++;
+        }
+
+        mensaje = "La posición especificada no existe en la lista";
+    }
+}
