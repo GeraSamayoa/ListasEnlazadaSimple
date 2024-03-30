@@ -7,6 +7,7 @@
 <div class="container">
     <div class="col-3 left-container">
         <button class="btnGeneral buttonInputRecorrido" @onclick="RecorrerRecursivamente">Recorrido Recursivo</button>
+        <button @onclick="OrdenarLista">Ordenar Lista</button>
 
         <table class="tabla table table-dark table-striped">
             <thead>
@@ -97,13 +98,11 @@
 
     // Se crea una instancia de la lista enlazada simple
     public ListaEnlazadaSimple Lista { get; set; } = new();
-    MensajeValidator mensajeValidator = new MensajeValidator();
-
 
     // Método para agregar un nodo al inicio de la lista enlazada simple
     private void AgregarNodoAlInicio()
     {
-        if (!string.IsNullOrEmpty(valor))
+        if (!string.IsNullOrWhiteSpace(valor))
         {
             mensajeError = null;
             Mensaje = Lista.AgregarAlInicio(valor);
@@ -135,10 +134,10 @@
     // Método para agregar un nodo en una posición específica
     private void AgregarNodoEnPosicionX()
     {
-        if (!string.IsNullOrEmpty(valor))
+        if (!string.IsNullOrWhiteSpace(valor))
         {
             Mensaje = Lista.AgregarNodoEnPosicion(new Nodo(valor), posicion ?? 0);
-            (mensajeError, valor, posicion) = mensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
+            (mensajeError, valor, posicion) = MensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
         }
         else
         {
@@ -153,17 +152,13 @@
         {
             if (!string.IsNullOrWhiteSpace(valor))
             {
-
-                // Si el campo de información no está vacío, crear un nuevo nodo con la información ingresada
                 var nuevoNodo = new Nodo(valor);
                 // Se agrega el nuevo nodo antes de la posición especificada en la lista
                 Mensaje = Lista.AgregarNodoAntesPosicion(nuevoNodo, posicion ?? 0);
-                (mensajeError, valor, posicion) = mensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
+                (mensajeError, valor, posicion) = MensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
             }
             else
             {
-
-                // Si el espacio está vacío, se lanza una excepción
                 throw new Exception("Debe ingresar información antes de agregar un nodo.");
             }
         }
@@ -177,23 +172,20 @@
     // Método para agregar un nodo después de una posición específica
     void AgregarNodoDespuesPosicion()
     {
-        //se usa un manejo de excepciones para asegurarse que el usuario no agregue nodos vacíos
         try
         {
             // con lo siguiente, se usa un manejo de excepción, por si espacio esta vacío
             if (!string.IsNullOrWhiteSpace(valor))
             {
-                // Si el campo de información no está vacío, crear un nuevo nodo con la información ingresada
                 var nuevoNodo = new Nodo(valor);
 
                 // Se agrega el nuevo nodo después de la posición especificada en la lista
                 Mensaje = Lista.AgregarNodoDespuesPosicion(nuevoNodo, posicion ?? 0);
 
-                (mensajeError, valor, posicion) = mensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
+                (mensajeError, valor, posicion) = MensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
             }
             else
             {
-                // Si el espacio está vacío, se lanza una excepción
                 throw new Exception("Debe ingresar información antes de agregar un nodo.");
             }
         }
@@ -211,7 +203,7 @@
         {
             // Llama al método EliminarNodoEnPosicion de la lista y guarda el mensaje retornado
             Mensaje = Lista.EliminarNodoEnPosicion(posicion ?? 0);
-            (mensajeError, posicion) = mensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);       
+            (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);       
         }
         catch (Exception ex)
         {
@@ -257,6 +249,13 @@
             // Manejar la excepción capturada y mostrar dicho mensaje al usuario, todo esto utilizando la propiedad de Message
             mensajeError = ex.Message;
         }
+    }
+
+    // Metodo para ordenar la lista
+    private void OrdenarLista()
+    {
+        Mensaje = Lista.OrdenarLista();
+        mensajeError = MensajeValidator.MensajeOrdenar(Mensaje, mensajeError);
     }
 
     // Método para recorrer la lista de forma recursiva

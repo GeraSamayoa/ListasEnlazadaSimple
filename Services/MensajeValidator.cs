@@ -4,7 +4,7 @@
 	{
 		
 
-		public (string? mensajeError,string valor, int? posicion) MensajeInsertar(string mensaje, string? mensajeError, int? posicion, string valor)
+		public static (string? mensajeError,string valor, int? posicion) MensajeInsertar(string mensaje, string? mensajeError, int? posicion, string valor)
 		{
 			
 			if (mensaje.StartsWith("Nodo agregado"))
@@ -17,7 +17,7 @@
 			}
         }
 
-		public (string? mensajeError, int? posicion) MensajeEliminar(string Mensaje, string? mensajeError, int? posicion)
+		public static (string? mensajeError, int? posicion) MensajeEliminar(string Mensaje, string? mensajeError, int? posicion)
 		{
 			if (Mensaje.StartsWith("¡Nodo eliminado"))
 			{
@@ -28,5 +28,17 @@
 				return (Mensaje, posicion);
 			}
 		}
+
+		public static string? MensajeOrdenar(string Mensaje, string? mensajeError)
+		{
+            if (Mensaje.StartsWith("¡Lista ordenada"))
+			{
+				return mensajeError = null;
+            }
+            else
+			{
+                return mensajeError = Mensaje;
+            }
+        }
 	}
 }

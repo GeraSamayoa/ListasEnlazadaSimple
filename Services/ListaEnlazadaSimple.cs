@@ -331,7 +331,7 @@ namespace Listas.Services
 			}
 
 			// Se retorna un mensaje indicando que la lista ha sido ordenada correctamente
-			return "La lista ha sido ordenada correctamente";
+			return "¡Lista ordenada ordenada correctamente!";
 
 		}
 
