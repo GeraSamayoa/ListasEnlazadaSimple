@@ -231,6 +231,30 @@
 		}
 	}
 
+	// Método para eliminar un nodo en una posición específica
+	void EliminarNodoEnPosicion()
+	{
+		try
+		{
+			// Llama al método EliminarNodoEnPosicion de la lista y guarda el mensaje retornado
+			Mensaje = Lista.EliminarNodoEnPosicion(posicion ?? 0);
+			if (Mensaje.StartsWith("¡Nodo eliminado"))
+            {
+                mensajeError = null;
+				this.posicion = null;
+            }
+            else
+            {
+                mensajeError = Mensaje;
+            }
+		}
+		catch (Exception ex)
+		{
+			// Si se produce una excepción durante la eliminación del nodo, captura el mensaje de la excepción
+			Mensaje = ex.Message;
+		}
+	}
+
 	// Método para buscar un nodo segun su valor en la lista enlazada simple desordenada
 	private void BuscarNodo()
     {
@@ -281,4 +305,14 @@
 }
 
 @*Botones sin disenio para agregar al frontend*@
-		@* <button @onclick="() => Lista.OrdenarLista()">Ordenar Lista</button> *@
+
+@*Ordenar Lista*@
+	@* <button @onclick="() => Lista.OrdenarLista()">Ordenar Lista</button> *@
+
+@*Eliminar nodo en posicion especifica*@
+	@* <!-- Input para ingresar la posición del nodo a eliminar -->
+	<input type="number" class="form-control mb-2" @bind="PosicionEliminar" placeholder="Posición para eliminar" />
+	<!-- Botón para activar la función de eliminar nodo en la posición -->
+	<button class="btn btn-danger" @onclick="EliminarNodoEnPosicion">
+		Eliminar Nodo en la Posición
+	</button> *@
