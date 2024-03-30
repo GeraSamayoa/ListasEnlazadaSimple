@@ -97,6 +97,8 @@
 
 	// Se crea una instancia de la lista enlazada simple
 	public ListaEnlazadaSimple Lista { get; set; } = new();
+	MensajeValidator mensajeValidator = new MensajeValidator();
+
 
 	// Método para agregar un nodo al inicio de la lista enlazada simple
 	private void AgregarNodoAlInicio()
@@ -136,16 +138,7 @@
 		if (!string.IsNullOrEmpty(valor))
 		{
 			Mensaje = Lista.AgregarNodoEnPosicion(new Nodo(valor), posicion ?? 0);
-			if (Mensaje.StartsWith("Nodo agregado"))
-			{
-				mensajeError = null;
-				this.valor = string.Empty;
-				this.posicion = null;
-			}
-			else
-			{
-				mensajeError = Mensaje;
-			}
+			(mensajeError, valor, posicion) = mensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
 		}
 		else
 		{
