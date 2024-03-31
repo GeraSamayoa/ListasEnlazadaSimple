@@ -5,39 +5,25 @@ html, body {
     overflow: hidden;
 }
 
+
 .container {
-    border-radius: 41px;
-    background: #2A2730;
-    box-shadow: -2px 4px 10px 4px rgba(0, 0, 0, 0.15);
-    display:flex;
-}
-
-.left-container{
-    max-width: 35vw;
-    margin: .8rem;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.tabla {
-    overflow: auto;
-    
-}
-
-.right-container {
     border-radius: 50px;
-    background: url(../public/portada.jpg) lightgray -218.347px -6.794px / 127.3% 107.728% no-repeat;
+    background: url(../public/rocket.svg) lightgray -218.347px -6.794px / 127.3% 107.728% no-repeat;
     box-shadow: -20px 15px 35px 25px rgba(0, 0, 0.2, 0.3) inset;
-    width: 60vw;
-    height: 96vh;
     flex-shrink: 0;
     margin: .7rem;
     display: flex;
-    flex-direction: column;
 }
 
-.search{
+.right-container{
+
+}
+
+.center-container{
+
+}
+
+.search {
     display: flex;
     justify-content: center;
     margin: 2rem 0;
@@ -50,9 +36,51 @@ html, body {
     border: 1px solid #18D96C;
     background: rgba(24, 217, 108, 0.50);
     padding: 0 1rem;
-    color:white;
+    color: white;
 }
 
+.inputs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.containerInput {
+    border-radius: 25px;
+    background: #2A2730;
+    width: 252px;
+    height: 136px;
+    flex-shrink: 0;
+    margin: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.inputValor {
+    background-color: #2A2730;
+    border: none;
+    border-bottom: 2px solid #E30F8E;
+    outline: none;
+    padding: 5px;
+    color: white;
+    width: 160px;
+    font-weight: bold;
+}
+
+.inputPosition {
+    background-color: #2A2730;
+    border: none;
+    border-bottom: 2px solid #AA5EC0;
+    outline: none;
+    padding: 5px;
+    color: white;
+    width: 160px;
+    font-weight: bold;
+}
+
+/*Mensajes de error y feedback*/
 .containerMessageError{
         top: 10%;
         left: 65%;
@@ -85,133 +113,3 @@ html, body {
     background: rgba(58, 213, 194, 0.80);
 }
 
-.containerform {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    margin: auto 0 .7rem 0;
-    align-items: center;
-}
-
-.inputs {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.containerInput {
-    border-radius: 25px;
-    background: #2A2730;
-    width: 252px;
-    height: 136px;
-    flex-shrink: 0;
-    margin: 1.5rem;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-}
-
-.inputValor {
-    background-color: #2A2730;
-    border: none;
-    border-bottom: 2px solid #E30F8E;
-    outline: none;
-    padding: 5px;
-    color: white;
-    width: 160px;
-    font-weight: bold;
-}
-
-.inputPosition {
-    background-color: #2A2730;
-    border: none;
-    border-bottom: 2px solid #AA5EC0;
-    outline: none;
-    padding: 5px;
-    color: white;
-    width: 160px;
-    font-weight: bold;
-}
-
-.valorLabel {
-    align-self: flex-start;
-    margin: 0 0 .7rem 2.5rem;
-    font-size: 12px;
-}
-
-.buttons {
-    display: flex;
-    align-items: flex-end;
-}
-
-.btnGeneral {
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-    color: #FFF;
-    border: none;
-    width: 153px;
-    height: 48px;
-    border-radius: 24px;
-    margin: .2rem;
-}
-
-.buttonInputBusqueda {
-    background: #18D96C;
-}
-
-.buttonInputBusqueda:hover {
-    background: #1C8E4E;
-}
-
-.buttonInputRecorrido {
-    background: #AA5EC0;
-    padding: .5rem;
-    margin: 1rem;
-}
-
-.buttonInputRecorrido:hover {
-    background: #874999;
-}
-
-.buttonInputII {
-    background: #F27405;
-}
-
-.buttonInputII:hover {
-    background: #D06202;
-}
-
-.buttonInputIF {
-    background: #192E59;
-}
-
-.buttonInputIF:hover {
-    background: #12203F;
-}
-
-.buttonInputIAX {
-    background: #18D96C;
-}
-
-.buttonInputIAX:hover {
-    background: #17C563;
-}
-
-.buttonInputIPX {
-    background: #E30F8E;
-}
-
-.buttonInputIPX:hover {
-    background: #AC0E6D;
-}
-
-.buttonInputIDX {
-    background: #0EBDE3;
-}
-
-.buttonInputIDX:hover {
-    background: #0C87A3;
-}

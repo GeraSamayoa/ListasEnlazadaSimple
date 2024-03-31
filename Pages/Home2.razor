@@ -1,0 +1,320 @@
+﻿@page "/home2"
+@using Listas.Services
+@using Listas.Models
+
+<PageTitle>Listas</PageTitle>
+
+<div class="container">
+    <div class="col-3 left-container">
+        <button class="btnGeneral buttonInputRecorrido" @onclick="RecorrerRecursivamente">Recorrido Recursivo</button>
+      
+        <table class="tabla table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Posicion</th>
+                    <th scope="col">Elemento</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var contador = 1;
+                }
+
+                @foreach (var nodo in nodosAux)
+                {
+                    <tr>
+                        <th scope="row">@(contador++)</th>
+                        <td>@nodo.Informacion</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+
+        <table class="tabla table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Posición</th>
+                    <th scope="col">Elemento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">@position</th>
+                    <td>@nombreAux</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="right-container">
+        <div class="search">
+            <input class="searchInput" type="type" name="name" @bind="elementoBuscada" />
+            <button class="btnGeneral buttonInputBusqueda" @onclick="BuscarNodo">Buscar</button>
+        </div>
+
+        @if (mensajeError != null)
+        {
+            <div class="containerMessageError">
+                <p>@mensajeError</p>
+            </div>
+        }
+        else if (Mensaje != null)
+        {
+            <div class="containerMessage">
+                <p>@Mensaje</p>
+            </div>
+        }
+        <div class="containerform">
+            <div class="inputs">
+                <div class="containerInput">
+                    <label class="valorLabel">Valor:</label>
+                    <input class="inputValor" @bind="valor" type="type" name="name" />
+                </div>
+                <div class="containerInput">
+                    <label class="valorLabel">Posición:</label>
+                    <input class="inputPosition" type="number" name="name" @bind="posicion" />
+                </div>
+            </div>
+            <div class="buttons">
+                <button class="btnGeneral buttonInputII" @onclick="AgregarNodoAlInicio">Insertar al Inicio</button>
+                <button class="btnGeneral buttonInputIF" @onclick="AgregarNodoFinal">Insertar al Final</button>
+                <button class="btnGeneral buttonInputIAX" @onclick="AgregarNodoAntesPosicion">Insertar antes de una posición X</button>
+                <button class="btnGeneral buttonInputIPX" @onclick="AgregarNodoEnPosicionX">Insertar en una posición X</button>
+                <button class="btnGeneral buttonInputIDX" @onclick="AgregarNodoDespuesPosicion">Insertar despues de una posición X</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    //valor a ingresar
+    private int? posicion { get; set; }
+    private string? valor, elementoBuscada, nombreAux, position;
+    private string? Mensaje, mensajeError = null;
+    private string resultado = string.Empty;
+
+    // Se crea una instancia de la lista enlazada simple
+    public ListaEnlazadaSimple Lista { get; set; } = new();
+
+    // Método para agregar un nodo al inicio de la lista enlazada simple
+    private void AgregarNodoAlInicio()
+    {
+        if (!string.IsNullOrWhiteSpace(valor))
+        {
+            mensajeError = null;
+            Mensaje = Lista.AgregarAlInicio(valor);
+            valor = string.Empty;
+        }
+        else
+        {
+            mensajeError = "Debe ingresar información antes de agregar un nodo.";
+        }
+    }
+
+    // Método para agregar un nodo al final de la lista enlazada simple
+    private void AgregarNodoFinal()
+    {
+        var nuevoNodo = new Nodo(valor);
+
+        if (!string.IsNullOrWhiteSpace(valor))
+        {
+            mensajeError = null;
+            Mensaje = Lista.AgregarNodoAlFinal(nuevoNodo);
+            valor = string.Empty;
+        }
+        else
+        {
+            mensajeError = "Debe ingresar información antes de agregar un nodo.";
+        }
+    }
+
+    // Método para agregar un nodo en una posición específica
+    private void AgregarNodoEnPosicionX()
+    {
+        if (!string.IsNullOrWhiteSpace(valor))
+        {
+            Mensaje = Lista.AgregarNodoEnPosicion(new Nodo(valor), posicion ?? 0);
+            (mensajeError, valor, posicion) = MensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
+        }
+        else
+        {
+            mensajeError = "Debe ingresar información antes de agregar un nodo.";
+        }
+    }
+
+    // Método para agregar un nodo antes de una posicion especifica
+    private void AgregarNodoAntesPosicion()
+    {
+        try
+        {
+            if (!string.IsNullOrWhiteSpace(valor))
+            {
+                var nuevoNodo = new Nodo(valor);
+                // Se agrega el nuevo nodo antes de la posición especificada en la lista
+                Mensaje = Lista.AgregarNodoAntesPosicion(nuevoNodo, posicion ?? 0);
+                (mensajeError, valor, posicion) = MensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
+            }
+            else
+            {
+                throw new Exception("Debe ingresar información antes de agregar un nodo.");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Manejar la excepción capturada y mostrar dicho mensaje al usuario, todo esto utilizando la propiedad de Message
+            mensajeError = ex.Message;
+        }
+    }
+
+    // Método para agregar un nodo después de una posición específica
+    void AgregarNodoDespuesPosicion()
+    {
+        try
+        {
+            // con lo siguiente, se usa un manejo de excepción, por si espacio esta vacío
+            if (!string.IsNullOrWhiteSpace(valor))
+            {
+                var nuevoNodo = new Nodo(valor);
+
+                // Se agrega el nuevo nodo después de la posición especificada en la lista
+                Mensaje = Lista.AgregarNodoDespuesPosicion(nuevoNodo, posicion ?? 0);
+
+                (mensajeError, valor, posicion) = MensajeValidator.MensajeInsertar(Mensaje, mensajeError, posicion, valor);
+            }
+            else
+            {
+                throw new Exception("Debe ingresar información antes de agregar un nodo.");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Manejar la excepción capturada y mostrar dicho mensaje al usuario, todo esto utilizando la propiedad de Message
+            mensajeError = ex.Message;
+        }
+    }
+
+    // Método para eliminar un nodo al inicio de la lista
+    void EliminarNodoInicio()
+    {
+        Mensaje = Lista.EliminarAlInicio();
+        (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+    }
+
+    // Método para eliminar un nodo al final de la lista
+    void EliminarUltimoNodo()
+    {
+        Mensaje = Lista.EliminarNodoFinal();
+        (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+    }
+
+    // Método para eliminar un nodo en una posición específica
+    void EliminarNodoEnPosicion()
+    {
+        try
+        {
+            // Llama al método EliminarNodoEnPosicion de la lista y guarda el mensaje retornado
+            Mensaje = Lista.EliminarNodoEnPosicion(posicion ?? 0);
+            (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);       
+        }
+        catch (Exception ex)
+        {
+            // Si se produce una excepción durante la eliminación del nodo, captura el mensaje de la excepción
+            mensajeError = ex.Message;
+        }
+    }
+
+    void EliminarNodoDespuesPosicion()
+    {
+        try
+        {
+            Mensaje = Lista.EliminarDespuesDe(posicion ?? 0);
+            (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+        }
+        catch (Exception ex)
+        {
+            mensajeError = ex.Message;
+
+        }
+    }
+
+    // Método para buscar un nodo segun su valor en la lista enlazada simple desordenada
+    private void BuscarNodo()
+    {
+        // Se usa un manejo de excepciones para asegurarse de que el usuario no busque nodos vacíos
+        try
+        {
+            // Con lo siguiente, se usa un manejo de excepción, por si espacio está vacío
+            if (string.IsNullOrWhiteSpace(elementoBuscada))
+            {
+                // Si el espacio está vacío, se lanza una excepción
+                throw new Exception("Debe ingresar información antes de buscar un nodo.");
+            }
+
+            // Si el campo de información no está vacío, se busca el nodo en la lista enlazada simple
+            dynamic? nodoBuscado = Lista.BuscarNodoPorValor(elementoBuscada);
+
+            // Si el nodo buscado no es nulo, se muestra la información del nodo en la tabla
+            if (nodoBuscado != null)
+            {
+                nombreAux = nodoBuscado.Informacion.ToString();
+                position = nodoBuscado.Posicion.ToString();
+            }
+            else
+            {
+                // Si el nodo buscado es nulo, se muestra un mensaje de que no se encontró el nodo
+                nombreAux = "No se encontró el nodo";
+                position = string.Empty;
+            }
+
+            // Se reinicia la propiedad de elemento buscado
+            elementoBuscada = string.Empty;
+        }
+        catch (Exception ex)
+        {
+            // Manejar la excepción capturada y mostrar dicho mensaje al usuario, todo esto utilizando la propiedad de Message
+            mensajeError = ex.Message;
+        }
+    }
+
+    // Metodo para ordenar la lista
+    private void OrdenarLista()
+    {
+        Mensaje = Lista.OrdenarLista();
+        mensajeError = MensajeValidator.MensajeOrdenar(Mensaje, mensajeError);
+    }
+
+    // Método para recorrer la lista de forma recursiva
+    private List<Nodo> nodosAux = new List<Nodo>();
+
+    private void RecorrerRecursivamente()
+    {
+        nodosAux.Clear();
+        ListaEnlazadaSimple.RecorrerRecursivamente(Lista.PrimerNodo, nodosAux);
+    }
+}
+
+@*Botones sin disenio para agregar al frontend*@
+
+@*Ordenar Lista*@
+	@* <button @onclick="() => Lista.OrdenarLista()">Ordenar Lista</button> *@
+
+@*Eliminar nodo en posicion especifica*@
+	@* <!-- Input para ingresar la posición del nodo a eliminar -->
+	<input type="number" class="form-control mb-2" @bind="PosicionEliminar" placeholder="Posición para eliminar" />
+	<!-- Botón para activar la función de eliminar nodo en la posición -->
+	<button class="btn btn-danger" @onclick="EliminarNodoEnPosicion">
+		Eliminar Nodo en la Posición
+	</button> *@
+
+@*Elininar Nodo despues despues de una posicion especifica*@
+    @* <button @onclick="EliminarNodoDespuesPosicion"> Elininar Nodo Despues de posicion X </button>*@
+
+@* Eliminar nodo al inicio *@
+    @*<button class="btn btn-primary" @onclick="EliminarNodoInicio">
+            Eliminar al inicio
+    </button> *@
+
+@* Eliminar nodo al final *@
+    @* <button @onclick="EliminarUltimoNodo">Eliminar Último Nodo</button> *@
