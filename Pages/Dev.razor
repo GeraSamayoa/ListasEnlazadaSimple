@@ -23,7 +23,7 @@
 <div>
     <label>Posición del Nodo a Eliminar:</label>
     <input type="number" @bind="posicion" />
-    <button class="btn btn-danger" @onclick="EliminarNodoEnPosicion">Eliminar Nodo</button>
+    <button class="btn btn-danger" @onclick="EliminarNodoAntesDePosicion">Eliminar Nodo Antes de Posición</button>
 </div>
 
 <hr />
@@ -36,7 +36,6 @@
 </ul>
 
 @code {
-
     public string Informacion { get; set; }
     public int posicion { get; set; }
     public ListaEnlazadaSimple Lista { get; set; } = new();
@@ -46,26 +45,30 @@
     void AgregarNodoFinal()
     {
         Nodo nuevoNodo = new Nodo(Informacion);
-
         Mensaje = Lista.AgregarNodoAlFinal(nuevoNodo);
-
         this.Informacion = string.Empty;
     }
 
     void AgregarNodoInicio()
     {
         Nodo nuevoNodo = new Nodo(Informacion);
-
         Mensaje = Lista.AgregarNodoAlInicio(nuevoNodo);
-
         this.Informacion = string.Empty;
     }
 
-    void EliminarNodoEnPosicion()
+    void EliminarNodoAntesDePosicion()
     {
-        if (Lista.ListaVacia())
+        if (Lista.ListaVacia() || posicion <= 1 || posicion > Lista.ContarNodos())
         {
-            Mensaje = "La lista está vacía";
+            Mensaje = "Posición inválida o la lista está vacía.";
+            return;
+        }
+
+        if (posicion == 2) // Caso especial, eliminar el primer nodo.
+        {
+            Lista.PrimerNodo = Lista.PrimerNodo.Referencia;
+            if (Lista.PrimerNodo == null) Lista.UltimoNodo = null; // Si la lista quedó vacía
+            Mensaje = "Se ha eliminado el nodo en la primera posición.";
             return;
         }
 
@@ -73,38 +76,25 @@
         Nodo? nodoAnterior = null;
         int contador = 1;
 
-        while (nodoActual != null)
+        while (nodoActual != null && nodoActual.Referencia != null)
         {
-            if (contador == posicion)
+            if (contador == posicion - 1)
             {
-                if (Lista.PrimerNodo == Lista.UltimoNodo)
+                if (nodoActual.Referencia == Lista.UltimoNodo)
                 {
-                    if (posicion > 2)
-                    {
-                        Mensaje = "La lista cuenta con un solo elemento";
-                        return;
-                    }
-                    else if (posicion == 2)
-                    {
-                        Lista.PrimerNodo = null;
-                        Lista.UltimoNodo = null;
-                        Mensaje = "Se ha eliminado el nodo en la posición especificada";
-                        return;
-                    }
+                    Lista.UltimoNodo = nodoActual;
                 }
-                else
-                {
-                    nodoAnterior!.Referencia = nodoActual.Referencia;
-                    Mensaje = "Se ha eliminado el nodo en la posición especificada";
-                    return;
-                }
+                nodoActual.Referencia = nodoActual.Referencia.Referencia;
+                Mensaje = "Se ha eliminado el nodo antes de la posición especificada.";
+                return;
             }
-
             nodoAnterior = nodoActual;
             nodoActual = nodoActual.Referencia;
             contador++;
         }
 
-        Mensaje = "La posición especificada no existe en la lista";
+        Mensaje = "La posición especificada no existe en la lista.";
     }
 }
+
+

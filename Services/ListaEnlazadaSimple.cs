@@ -67,5 +67,17 @@ namespace Listas.Services
 			}
 
 		}
-	}
+        public int ContarNodos()
+        {
+            int contador = 0;
+            Nodo? actual = PrimerNodo;
+            while (actual != null)
+            {
+                contador++;
+                actual = actual.Referencia;
+            }
+            return contador;
+        }
+
+    }
 }
