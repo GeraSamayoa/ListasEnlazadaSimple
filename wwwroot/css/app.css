@@ -11,14 +11,21 @@ html, body {
     background: url(../public/rocket.svg) lightgray -218.347px -6.794px / 127.3% 107.728% no-repeat;
     box-shadow: -20px 15px 35px 25px rgba(0, 0, 0.2, 0.3) inset;
     flex-shrink: 0;
-    margin: .7rem;
+    margin: .8rem 0 .7rem .7rem;
     display: flex;
-    width: 120vw;
+    max-width: 100%;
+    width: 94vw;
     height: 95vh;
 }
 
-.right-container{
-
+.right-container {
+    border-radius: 41px;
+    background: rgba(42, 39, 48, 0.70);
+    box-shadow: -2px 4px 10px 4px rgba(0, 0, 0, 0.15);
+    width: 303px;
+    height: 90vh;
+    flex-shrink: 0;
+    margin: 1rem .7rem 0 0;
 }
 
 .center-container{
@@ -32,7 +39,7 @@ html, body {
 }
 
 .searchInput {
-    width: 560px;
+    width: 354px;
     height: 48px;
     padding: 0 1rem;
     color: white;
@@ -48,6 +55,7 @@ html, body {
     height: 48px;
     flex-shrink: 0;
     border: 1px solid #F1B33C;
+    margin: 0 .7rem;
 }
 
 .buttonInputSearch:hover{
@@ -56,14 +64,13 @@ html, body {
 
 .inputs {
     display: flex;
-    align-items: center;
     justify-content: center;
 }
 
 .containerInput {
     border-radius: 25px;
     background: #2A2730;
-    width: 252px;
+    width: 225px;
     height: 136px;
     flex-shrink: 0;
     margin: 1.5rem;
@@ -96,6 +103,12 @@ html, body {
 }
 
 
-.left-container{
-
+.left-container {
+    border-radius: 41px;
+    background: rgba(42, 39, 48, 0.70);
+    box-shadow: -2px 4px 10px 4px rgba(0, 0, 0, 0.15);
+    width: 303px;
+    height: 90vh;
+    flex-shrink: 0;
+    margin: 1rem .5rem 0 0;
 }
