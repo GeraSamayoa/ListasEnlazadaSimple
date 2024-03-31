@@ -63,14 +63,14 @@
             return;
         }
 
-        // Casos especiales: posición inválida o intento de eliminar antes del primer nodo
+        
         if (posicion <= 2)
         {
             Mensaje = "No se puede eliminar un nodo antes de la posición " + posicion + ". La operación no es válida.";
             return;
         }
 
-        // Si la posición es 3, queremos eliminar el primer nodo
+        
         if (posicion == 3)
         {
             Lista.PrimerNodo = Lista.PrimerNodo?.Referencia;
@@ -82,7 +82,6 @@
         Nodo? nodoAnterior = null;
         int contador = 1;
 
-        // Avanzar hasta llegar al nodo justo antes del que queremos eliminar
         while (nodoActual != null && contador < posicion - 1)
         {
             nodoAnterior = nodoActual;
@@ -90,18 +89,18 @@
             contador++;
         }
 
-        // Verificar que no estamos al final de la lista sin encontrar la posición
+        
         if (nodoActual == null || nodoActual.Referencia == null)
         {
             Mensaje = "La posición especificada excede el tamaño de la lista.";
             return;
         }
 
-        // En este punto, nodoAnterior apunta al nodo antes del que queremos eliminar
+        
         if (nodoAnterior != null)
         {
             nodoAnterior.Referencia = nodoActual.Referencia;
-            if (nodoAnterior.Referencia == null) // Si eliminamos el penúltimo, actualizar UltimoNodo
+            if (nodoAnterior.Referencia == null) 
             {
                 Lista.UltimoNodo = nodoAnterior;
             }
