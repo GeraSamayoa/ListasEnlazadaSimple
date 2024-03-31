@@ -303,7 +303,7 @@ namespace Listas.Services
 				UltimoNodo = nodoAnterior;  // El nodo anterior se convierte en el último nodo
 			}
 
-			return "¡Se ha eliminado el nodo correctamente!";
+			return $"¡Se ha eliminado el nodo en la posicion {posicion} correctamente!";
 		}
 
         // Método para Eliminar un nodo despues de una posición específica
@@ -339,7 +339,7 @@ namespace Listas.Services
                 nodoActual.Referencia = nodoActual.Referencia.Referencia;
             }
 
-            return "¡Se ha eliminado el Nodo Exitosamente";
+            return $"¡Se ha eliminado el Nodo despues de la {posicion} Exitosamente";
         }
 
         //Metodo para buscar un nodo por su valor en una lista enlazada simple desordenada
