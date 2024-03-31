@@ -202,6 +202,13 @@
         (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
     }
 
+    // Método para eliminar un nodo al final de la lista
+    void EliminarUltimoNodo()
+    {
+        Mensaje = Lista.EliminarNodoFinal();
+        (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+    }
+
     // Método para eliminar un nodo en una posición específica
     void EliminarNodoEnPosicion()
     {
@@ -308,3 +315,6 @@
     @*<button class="btn btn-primary" @onclick="EliminarNodoInicio">
             Eliminar al inicio
     </button> *@
+
+@* Eliminar nodo al final *@
+    @* <button @onclick="EliminarUltimoNodo">Eliminar Último Nodo</button> *@

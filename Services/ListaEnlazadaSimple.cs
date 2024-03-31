@@ -196,6 +196,8 @@ namespace Listas.Services
 			return $"Nodo agregado el nodo después de la posición: {posicion}.";
 		}
 
+		// Métodos para eliminar nodos de la lista
+
 		// Metodo para Eliminar el primer nodo de la lista
         public string EliminarAlInicio()
         {
@@ -216,7 +218,38 @@ namespace Listas.Services
                 PrimerNodo = PrimerNodo?.Referencia;
                 nodoTemporal = null;
             }
-            return "¡Se ha eliminado el primer nodo de la lista con exito";
+            return "¡Se ha eliminado el primer nodo de la lista con exito!";
+        }
+
+        // Método para eliminar el último nodo de la lista
+        public string EliminarNodoFinal()
+        {
+            // Verificar si la lista está vacía
+            if (ListaVacia())
+            {
+                return "La lista está vacía, no hay nodos para eliminar.";
+            }
+
+            // Si la lista solo tiene un nodo, se elimina y se actualizan los punteros
+            if (PrimerNodo.Referencia == null)
+            {
+                PrimerNodo = null;
+                UltimoNodo = null;
+                return "¡Se ha eliminado el único nodo de la lista!";
+            }
+
+            // Si la lista tiene más de un nodo, se itera para encontrar el penúltimo nodo
+            Nodo? nodoActual = PrimerNodo;
+            while (nodoActual?.Referencia != UltimoNodo)
+            {
+                nodoActual = nodoActual?.Referencia;
+            }
+
+            // Se elimina la referencia al último nodo y se actualiza el puntero del último nodo
+            nodoActual.Referencia = null;
+            UltimoNodo = nodoActual;
+
+            return "¡Se ha eliminado el último nodo de la lista!";
         }
 
         // Método para Eliminar un nodo en una posición específica
