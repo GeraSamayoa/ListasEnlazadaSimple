@@ -7,6 +7,7 @@
 <div class="container">
     <div class="col-3 left-container">
         <button class="btnGeneral buttonInputRecorrido" @onclick="RecorrerRecursivamente">Recorrido Recursivo</button>
+        <button @onclick="EliminarNodoDespuesPosicion"> Elininar Nodo Despues de posicion X </button>
         <button @onclick="OrdenarLista">Ordenar Lista</button>
 
         <table class="tabla table table-dark table-striped">
@@ -208,7 +209,21 @@
         catch (Exception ex)
         {
             // Si se produce una excepción durante la eliminación del nodo, captura el mensaje de la excepción
-            Mensaje = ex.Message;
+            mensajeError = ex.Message;
+        }
+    }
+
+    void EliminarNodoDespuesPosicion()
+    {
+        try
+        {
+            Mensaje = Lista.EliminarDespuesDe(posicion ?? 0);
+            (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+        }
+        catch (Exception ex)
+        {
+            mensajeError = ex.Message;
+
         }
     }
 
