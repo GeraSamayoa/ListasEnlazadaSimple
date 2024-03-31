@@ -1,17 +1,17 @@
-﻿@page "/l"
+﻿@page "/lista-enlazada"
 
-@using Listas.Models;
-@using Listas.Services;
-
+@using Listas.Services
 @inject ListaEnlazadaSimple listaEnlazada
 
-<h3>Eliminar un elemento al final de una lista enlazada simple</h3>
+<h3>Lista Enlazada Simple</h3>
 
-<p>
-    <button @onclick="AgregarNodoAlFinal">Agregar nodo al final</button>
-    <button @onclick="EliminarNodoAlFinal">Eliminar nodo al final</button>
-</p>
+<!-- Sección para agregar un nuevo nodo al final de la lista -->
+<div>
+    <input @bind="nuevoValor" placeholder="Ingresa un valor para el nodo" />
+    <button @onclick="AgregarNodo">Agregar Nodo al Final</button>
+</div>
 
+<!-- Sección para mostrar la lista enlazada -->
 <ul>
     @foreach (var nodo in listaEnlazada)
     {
@@ -19,21 +19,25 @@
     }
 </ul>
 
-@if (mensaje != "")
-{
-    <p>@mensaje</p>
-}
+<!-- Sección para eliminar el último nodo de la lista -->
+<div>
+    <button @onclick="EliminarUltimoNodo">Eliminar Último Nodo</button>
+</div>
 
 @code {
-    private string mensaje = "";
+    private string nuevoValor;
 
-    private void AgregarNodoAlFinal()
+    // Método para agregar un nuevo nodo al final de la lista
+    private void AgregarNodo()
     {
-        listaEnlazada.AgregarNodoAlFinal(new Nodo("Nuevo nodo"));
+        var nuevoNodo = new Nodo { Valor = nuevoValor };
+        listaEnlazada.AgregarNodoAlFinal(nuevoNodo);
+        nuevoValor = string.Empty; // Limpiar el campo de texto
     }
 
-    private void EliminarNodoAlFinal()
+    // Método para eliminar el último nodo de la lista
+    private void EliminarUltimoNodo()
     {
-        mensaje = listaEnlazada.EliminarNodoAlFinal();
+        listaEnlazada.EliminarNodoFinal();
     }
 }

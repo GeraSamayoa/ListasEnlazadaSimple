@@ -6,18 +6,15 @@ namespace Listas.Services
 {
     public class ListaEnlazadaSimple : IEnumerable
     {
-
         public Nodo? PrimerNodo { get; set; }
         public Nodo? UltimoNodo { get; set; }
 
-        // Constructor de la clase ListaEnlazadaSimple inicializa los nodos en null porque la lista está vacía
         public ListaEnlazadaSimple()
         {
             PrimerNodo = null;
             UltimoNodo = null;
         }
 
-        // Método para verificar si la lista está vacía
         public bool ListaVacia()
         {
             return PrimerNodo == null;
@@ -50,44 +47,40 @@ namespace Listas.Services
             {
                 nuevoNodo.Referencia = PrimerNodo;
                 PrimerNodo = nuevoNodo;
-
             }
 
             return "Se ha agregado el nodo al inicio";
         }
 
-        /// <summary>
-        /// Elimina un elemento al final de la lista enlazada simple.
-        /// </summary>
-        /// <returns>
-        /// "Nodo eliminado exitosamente" si se eliminó un nodo.
-        /// "La lista está vacía" si la lista está vacía.
-        /// "No hay nodos para eliminar" si solo hay un nodo en la lista.
-        /// </returns>
-        public string EliminarNodoAlFinal()
+        // Método para eliminar el último nodo de la lista
+        public string EliminarNodoFinal()
         {
+            // Verificar si la lista está vacía
             if (ListaVacia())
             {
-                return "La lista está vacía";
+                return "La lista está vacía, no hay nodos para eliminar.";
             }
 
-            if (PrimerNodo == UltimoNodo)
+            // Si la lista solo tiene un nodo, se elimina y se actualizan los punteros
+            if (PrimerNodo.Referencia == null)
             {
                 PrimerNodo = null;
                 UltimoNodo = null;
-                return "No hay nodos para eliminar";
+                return "El único nodo de la lista ha sido eliminado.";
             }
 
-            Nodo? nodoAuxiliar = PrimerNodo;
-            while (nodoAuxiliar.Referencia != UltimoNodo)
+            // Si la lista tiene más de un nodo, se itera para encontrar el penúltimo nodo
+            Nodo? nodoActual = PrimerNodo;
+            while (nodoActual.Referencia != UltimoNodo)
             {
-                nodoAuxiliar = nodoAuxiliar.Referencia;
+                nodoActual = nodoActual.Referencia;
             }
 
-            UltimoNodo = nodoAuxiliar;
-            UltimoNodo.Referencia = null;
+            // Se elimina la referencia al último nodo y se actualiza el puntero del último nodo
+            nodoActual.Referencia = null;
+            UltimoNodo = nodoActual;
 
-            return "Nodo eliminado exitosamente";
+            return "El último nodo ha sido eliminado.";
         }
 
         public IEnumerator GetEnumerator()
@@ -99,7 +92,6 @@ namespace Listas.Services
                 yield return nodoAuxiliar;
                 nodoAuxiliar = nodoAuxiliar.Referencia;
             }
-
         }
     }
 }
