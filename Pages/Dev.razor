@@ -55,20 +55,26 @@
         Mensaje = Lista.AgregarNodoAlInicio(nuevoNodo);
         this.Informacion = string.Empty;
     }
-
     void EliminarNodoAntesDePosicion()
     {
-        if (Lista.ListaVacia() || posicion <= 1 || posicion > Lista.ContarNodos())
+        if (Lista.ListaVacia())
         {
-            Mensaje = "Posición inválida o la lista está vacía.";
+            Mensaje = "La lista está vacía";
             return;
         }
 
-        if (posicion == 2) // Caso especial, eliminar el primer nodo.
+        // Casos especiales: posición inválida o intento de eliminar antes del primer nodo
+        if (posicion <= 2)
         {
-            Lista.PrimerNodo = Lista.PrimerNodo.Referencia;
-            if (Lista.PrimerNodo == null) Lista.UltimoNodo = null; // Si la lista quedó vacía
-            Mensaje = "Se ha eliminado el nodo en la primera posición.";
+            Mensaje = "No se puede eliminar un nodo antes de la posición " + posicion + ". La operación no es válida.";
+            return;
+        }
+
+        // Si la posición es 3, queremos eliminar el primer nodo
+        if (posicion == 3)
+        {
+            Lista.PrimerNodo = Lista.PrimerNodo?.Referencia;
+            Mensaje = "Se ha eliminado el nodo antes de la posición especificada (el primer nodo).";
             return;
         }
 
@@ -76,25 +82,34 @@
         Nodo? nodoAnterior = null;
         int contador = 1;
 
-        while (nodoActual != null && nodoActual.Referencia != null)
+        // Avanzar hasta llegar al nodo justo antes del que queremos eliminar
+        while (nodoActual != null && contador < posicion - 1)
         {
-            if (contador == posicion - 1)
-            {
-                if (nodoActual.Referencia == Lista.UltimoNodo)
-                {
-                    Lista.UltimoNodo = nodoActual;
-                }
-                nodoActual.Referencia = nodoActual.Referencia.Referencia;
-                Mensaje = "Se ha eliminado el nodo antes de la posición especificada.";
-                return;
-            }
             nodoAnterior = nodoActual;
             nodoActual = nodoActual.Referencia;
             contador++;
         }
 
-        Mensaje = "La posición especificada no existe en la lista.";
+        // Verificar que no estamos al final de la lista sin encontrar la posición
+        if (nodoActual == null || nodoActual.Referencia == null)
+        {
+            Mensaje = "La posición especificada excede el tamaño de la lista.";
+            return;
+        }
+
+        // En este punto, nodoAnterior apunta al nodo antes del que queremos eliminar
+        if (nodoAnterior != null)
+        {
+            nodoAnterior.Referencia = nodoActual.Referencia;
+            if (nodoAnterior.Referencia == null) // Si eliminamos el penúltimo, actualizar UltimoNodo
+            {
+                Lista.UltimoNodo = nodoAnterior;
+            }
+            Mensaje = "Se ha eliminado el nodo antes de la posición especificada.";
+        }
     }
+
+
 }
 
 
