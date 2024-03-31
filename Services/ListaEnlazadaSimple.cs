@@ -283,7 +283,7 @@ namespace Listas.Services
                 nodoActual.Referencia = nodoActual.Referencia.Referencia;
             }
 
-            return "!Nodo eliminado Exitosamente";
+            return "¡Nodo eliminado Exitosamente";
         }
 
         //Metodo para buscar un nodo por su valor en una lista enlazada simple desordenada
