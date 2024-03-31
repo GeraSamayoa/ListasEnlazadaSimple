@@ -14,6 +14,12 @@
     Agregar Nodo Al Inicio
 </button>
 
+<label for="posicionInput">Posición:</label>
+<input id="posicionInput" type="number" @bind="posicionParaEliminar" />
+
+<button @onclick="EliminarNodoDespuesDe">Eliminar Nodo</button>
+
+
 <hr />
 
 <p class="bg-dark text-white">@Mensaje</p>
@@ -53,6 +59,15 @@
         this.Informacion = string.Empty;
     }
 
+
+    
+    int posicionParaEliminar;
+
+    // Método para eliminar el nodo después de la posición especificada
+    void EliminarNodoDespuesDe()
+    {
+        Mensaje = Lista.EliminarDespuesDe(posicionParaEliminar);
+    }
 
 
 }
