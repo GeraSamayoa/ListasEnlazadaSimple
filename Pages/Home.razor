@@ -195,6 +195,13 @@
         }
     }
 
+    // Método para eliminar un nodo al inicio de la lista
+    void EliminarNodoInicio()
+    {
+        Mensaje = Lista.EliminarAlInicio();
+        (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+    }
+
     // Método para eliminar un nodo en una posición específica
     void EliminarNodoEnPosicion()
     {
@@ -293,5 +300,11 @@
 	<button class="btn btn-danger" @onclick="EliminarNodoEnPosicion">
 		Eliminar Nodo en la Posición
 	</button> *@
-    @*Elininar Nodo despues despues de una posicion especifica*@
-@* <button @onclick="EliminarNodoDespuesPosicion"> Elininar Nodo Despues de posicion X </button>*@
+
+@*Elininar Nodo despues despues de una posicion especifica*@
+    @* <button @onclick="EliminarNodoDespuesPosicion"> Elininar Nodo Despues de posicion X </button>*@
+
+@* Eliminar nodo al inicio *@
+    @*<button class="btn btn-primary" @onclick="EliminarNodoInicio">
+            Eliminar al inicio
+    </button> *@

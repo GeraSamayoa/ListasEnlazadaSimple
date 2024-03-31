@@ -19,7 +19,7 @@
 
 		public static (string? mensajeError, int? posicion) MensajeEliminar(string Mensaje, string? mensajeError, int? posicion)
 		{
-			if (Mensaje.StartsWith("¡Nodo eliminado"))
+			if (Mensaje.StartsWith("¡Se ha eliminado"))
 			{
 				return (null, null);
 			}

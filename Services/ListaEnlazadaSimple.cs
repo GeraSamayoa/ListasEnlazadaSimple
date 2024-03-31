@@ -196,8 +196,31 @@ namespace Listas.Services
 			return $"Nodo agregado el nodo después de la posición: {posicion}.";
 		}
 
-		// Método para Eliminar un nodo en una posición específica
-		public string EliminarNodoEnPosicion(int posicion)
+		// Metodo para Eliminar el primer nodo de la lista
+        public string EliminarAlInicio()
+        {
+            if (ListaVacia())
+            {
+                return "La lista no cuenta con elementos";
+            }
+            else if (PrimerNodo == UltimoNodo)
+            {
+                PrimerNodo = null;
+                UltimoNodo = null;
+            }
+            else
+            {
+                Nodo? nodoTemporal;
+
+                nodoTemporal = PrimerNodo;
+                PrimerNodo = PrimerNodo?.Referencia;
+                nodoTemporal = null;
+            }
+            return "¡Se ha eliminado el primer nodo de la lista con exito";
+        }
+
+        // Método para Eliminar un nodo en una posición específica
+        public string EliminarNodoEnPosicion(int posicion)
 		{
 			// Verificar si la lista está vacía
 			if (ListaVacia())
@@ -247,7 +270,7 @@ namespace Listas.Services
 				UltimoNodo = nodoAnterior;  // El nodo anterior se convierte en el último nodo
 			}
 
-			return "¡Nodo eliminado correctamente!";
+			return "¡Se ha eliminado el nodo correctamente!";
 		}
 
         // Método para Eliminar un nodo despues de una posición específica
@@ -283,7 +306,7 @@ namespace Listas.Services
                 nodoActual.Referencia = nodoActual.Referencia.Referencia;
             }
 
-            return "¡Nodo eliminado Exitosamente";
+            return "¡Se ha eliminado el Nodo Exitosamente";
         }
 
         //Metodo para buscar un nodo por su valor en una lista enlazada simple desordenada
