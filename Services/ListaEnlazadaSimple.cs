@@ -71,9 +71,9 @@ namespace Listas.Services
 
             // Si la lista tiene más de un nodo, se itera para encontrar el penúltimo nodo
             Nodo? nodoActual = PrimerNodo;
-            while (nodoActual.Referencia != UltimoNodo)
+            while (nodoActual?.Referencia != UltimoNodo)
             {
-                nodoActual = nodoActual.Referencia;
+                nodoActual = nodoActual?.Referencia;
             }
 
             // Se elimina la referencia al último nodo y se actualiza el puntero del último nodo

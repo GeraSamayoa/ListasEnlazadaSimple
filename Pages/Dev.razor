@@ -1,30 +1,78 @@
-﻿@page "/lista-enlazada"
-
+﻿﻿
+@page "/"
+@using Listas.Models
 @using Listas.Services
-@inject ListaEnlazadaSimple listaEnlazada
 
-<h3>Lista Enlazada Simple</h3>
+<PageTitle>Home</PageTitle>
 
-<!-- Sección para agregar un nuevo nodo al final de la lista -->
-<div>
-    <input @bind="nuevoValor" placeholder="Ingresa un valor para el nodo" />
-    <button @onclick="AgregarNodo">Agregar Nodo al Final</button>
-</div>
+<input type="text" class="form-control mb-2 mt-5" style="width: 26rem" @bind="Informacion" />
 
-<!-- Sección para mostrar la lista enlazada -->
-<ul>
-    @foreach (var nodo in listaEnlazada)
-    {
-        <li>@nodo.Valor</li>
-    }
-</ul>
+<button class="btn btn-success" @onclick="AgregarNodoFinal">
+    Agregar Nodo Al final
+</button>
 
-<!-- Sección para eliminar el último nodo de la lista -->
+<button class="btn btn-primary" @onclick="AgregarNodoInicio">
+    Agregar Nodo Al Inicio
+</button>
+
 <div>
     <button @onclick="EliminarUltimoNodo">Eliminar Último Nodo</button>
 </div>
 
+<hr />
+
+<p class="bg-dark text-white">@Mensaje</p>
+
+<hr />
+
+<ul>
+    @foreach (var item in Lista)
+    {
+        <li>@item</li>
+    }
+</ul>
+
 @code {
+
+    public string? Informacion { get; set; }
+
+    public ListaEnlazadaSimple Lista { get; set; } = new();
+
+    string Mensaje = string.Empty;
+
+    void AgregarNodoFinal()
+    {
+        Nodo nuevoNodo = new Nodo(Informacion);
+
+        Mensaje = Lista.AgregarNodoAlFinal(nuevoNodo);
+
+        this.Informacion = string.Empty;
+    }
+
+    void AgregarNodoInicio()
+    {
+        Nodo nuevoNodo = new Nodo(Informacion);
+
+        Mensaje = Lista.AgregarNodoAlInicio(nuevoNodo);
+
+        this.Informacion = string.Empty;
+    }
+
+    private void EliminarUltimoNodo()
+    {
+        Lista.EliminarNodoFinal();
+    }
+
+
+
+}
+
+
+
+
+
+
+@*@code {
     private string nuevoValor;
 
     // Método para agregar un nuevo nodo al final de la lista
@@ -41,3 +89,4 @@
         listaEnlazada.EliminarNodoFinal();
     }
 }
+ *@
