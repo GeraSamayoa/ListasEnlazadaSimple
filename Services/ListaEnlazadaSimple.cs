@@ -250,8 +250,44 @@ namespace Listas.Services
 			return "¡Nodo eliminado correctamente!";
 		}
 
-		//Metodo para buscar un nodo por su valor en una lista enlazada simple desordenada
-		public Nodo? BuscarNodoPorValor(string elemento)
+        // Método para Eliminar un nodo despues de una posición específica
+        public string EliminarDespuesDe(int posicion)
+        {
+            if (ListaVacia())
+            {
+                // La lista está vacía o la posición es inválida.
+                return "la lista esta vacia";
+            }
+
+            if (posicion <= 0)
+            {
+                // La lista está vacía o la posición es inválida.
+                return "la Pocision es invalida, ingrese un numero mayor del 0";
+            }
+            // Se inicia en la cabeza y se recorre la lista hasta la posición especificada.
+            Nodo? nodoActual = PrimerNodo;
+            for (int i = 1; i < posicion && nodoActual != null; i++)
+            {
+                // Avanza hasta el nodo en la posición especificada.
+                nodoActual = nodoActual.Referencia;
+            }
+            if (nodoActual?.Referencia == null || nodoActual == null)
+            {
+                return "Posicion fuera de rango";
+            }
+
+            // Si hay un nodo después del actual, se elimina cambiando la referencia Siguiente.
+            if (nodoActual?.Referencia != null)
+            {
+                // El nodo a eliminar es el siguiente del nodo actual.
+                nodoActual.Referencia = nodoActual.Referencia.Referencia;
+            }
+
+            return "!Nodo eliminado Exitosamente";
+        }
+
+        //Metodo para buscar un nodo por su valor en una lista enlazada simple desordenada
+        public Nodo? BuscarNodoPorValor(string elemento)
 		{
 			// Se declara e inicializa la variable auxiliar y el índice de posición
 			dynamic? nodoActual = PrimerNodo;
