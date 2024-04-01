@@ -68,7 +68,7 @@ namespace Listas.Services
 
         public string EliminarNodoAntesDe(int posicion)
         {
-            if (ListaVacia() || posicion <= 1 || posicion > ContarNodos() + 1)
+            if (ListaVacia() || posicion <= 1)
             {
                 return "Operación no válida. La lista está vacía o la posición especificada es inválida.";
             }
@@ -77,14 +77,13 @@ namespace Listas.Services
             {
                 PrimerNodo = PrimerNodo?.Referencia;
                 if (PrimerNodo == null) UltimoNodo = null; // Si la lista quedó vacía
-                ActualizarPosiciones();
                 return "El nodo antes de la posición especificada ha sido eliminado.";
             }
 
             Nodo? nodoActual = PrimerNodo;
             int contador = 1;
 
-            while (nodoActual != null && contador < posicion - 1)
+            while (nodoActual != null && contador < posicion - 2)
             {
                 nodoActual = nodoActual.Referencia;
                 contador++;
@@ -98,34 +97,9 @@ namespace Listas.Services
             nodoActual.Referencia = nodoActual.Referencia.Referencia;
             if (nodoActual.Referencia == null) UltimoNodo = nodoActual;
 
-            ActualizarPosiciones();
-
             return "El nodo antes de la posición especificada ha sido eliminado.";
         }
 
-        public int ContarNodos()
-        {
-            int contador = 0;
-            Nodo? nodoActual = PrimerNodo;
-            while (nodoActual != null)
-            {
-                contador++;
-                nodoActual = nodoActual.Referencia;
-            }
-            return contador;
-        }
-
-        private void ActualizarPosiciones()
-        {
-            Nodo? nodoActual = PrimerNodo;
-            int contador = 1;
-            while (nodoActual != null)
-            {
-                nodoActual.Posicion = contador;
-                nodoActual = nodoActual.Referencia;
-                contador++;
-            }
-        }
         public void EliminarNodoInicio()
         {
             if (ListaVacia())

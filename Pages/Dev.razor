@@ -12,7 +12,7 @@
     <div class="my-3">
         <label>Posición del Nodo a Eliminar Antes:</label>
         <input type="number" class="form-control w-auto d-inline-block" @bind="posicion" />
-        <button class="btn btn-danger" @onclick="EliminarNodoEnPosicion">Eliminar Nodo Antes de Posición</button>
+        <button class="btn btn-danger" @onclick="EliminarNodoAntesDePosicion">Eliminar Nodo Antes de Posición</button>
     </div>
 
     @if (!string.IsNullOrEmpty(Mensaje))
@@ -55,61 +55,10 @@
         }
     }
 
-    void EliminarNodoEnPosicion()
+    void EliminarNodoAntesDePosicion()
     {
-        if (Lista.ListaVacia())
-        {
-            Mensaje = "La lista está vacía.";
-            return;
-        }
-
-        if (posicion <= 2 || posicion > Lista.ContarNodos() + 1)
-        {
-            Mensaje = "Posición inválida. No se puede eliminar antes de la posición 2 o más allá del último nodo.";
-            return;
-        }
-
-        if (posicion == 3)
-        {
-            Lista.EliminarNodoInicio();
-            Mensaje = "Nodo antes de la posición 3 eliminado.";
-            ActualizarPosiciones();
-            return;
-        }
-
-        int contador = 1;
-        Nodo? nodoActual = Lista.PrimerNodo;
-        Nodo? nodoAnterior = null;
-
-        while (nodoActual != null && contador < posicion - 1)
-        {
-            nodoAnterior = nodoActual;
-            nodoActual = nodoActual.Referencia;
-            contador++;
-        }
-
-        if (nodoActual != null && nodoAnterior != null)
-        {
-            nodoAnterior.Referencia = nodoActual.Referencia;
-            Mensaje = $"Nodo antes de la posición {posicion} eliminado correctamente.";
-            ActualizarPosiciones();
-        }
-        else
-        {
-            Mensaje = "Posición no válida para la operación solicitada.";
-        }
+        Mensaje = Lista.EliminarNodoAntesDe(posicion);
     }
 
-    void ActualizarPosiciones()
-    {
-        Nodo? nodoActual = Lista.PrimerNodo;
-        int contador = 1;
-        while (nodoActual != null)
-        {
-            nodoActual.Posicion = contador;
-            nodoActual = nodoActual.Referencia;
-            contador++;
-        }
-    }
 }
 
