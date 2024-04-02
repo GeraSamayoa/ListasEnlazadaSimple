@@ -210,6 +210,8 @@
         }
     }
 
+    // Método para elimininar y ordenar nodos de la lista
+
     // Método para eliminar un nodo al inicio de la lista
     void EliminarNodoInicio()
     {
@@ -222,6 +224,35 @@
     {
         Mensaje = Lista.EliminarNodoFinal();
         (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+    }
+
+    // Método para eliminar un nodo antes de una posición específica
+    void EliminarNodoAntesPosicion()
+    {
+        try
+        {
+            Mensaje = Lista.EliminarNodoAntesDe(posicion ?? 0);
+            (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+        }
+        catch (Exception ex)
+        {
+            mensajeError = ex.Message;
+        }
+    }
+
+    // Método para eliminar un nodo después de una posición específica
+    void EliminarNodoDespuesPosicion()
+    {
+        try
+        {
+            Mensaje = Lista.EliminarDespuesDe(posicion ?? 0);
+            (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
+        }
+        catch (Exception ex)
+        {
+            mensajeError = ex.Message;
+
+        }
     }
 
     // Método para eliminar un nodo en una posición específica
@@ -240,31 +271,11 @@
         }
     }
 
-    void EliminarNodoAntesPosicion()
+    // Metodo para ordenar la lista
+    private void OrdenarLista()
     {
-        try
-        {
-            Mensaje = Lista.EliminarNodoAntesDe(posicion ?? 0);
-            (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
-        }
-        catch (Exception ex)
-        {
-            mensajeError = ex.Message;
-        }
-    }
-
-    void EliminarNodoDespuesPosicion()
-    {
-        try
-        {
-            Mensaje = Lista.EliminarDespuesDe(posicion ?? 0);
-            (mensajeError, posicion) = MensajeValidator.MensajeEliminar(Mensaje, mensajeError, posicion);
-        }
-        catch (Exception ex)
-        {
-            mensajeError = ex.Message;
-
-        }
+        Mensaje = Lista.OrdenarLista();
+        mensajeError = MensajeValidator.MensajeOrdenar(Mensaje, mensajeError);
     }
 
     // Método para buscar un nodo segun su valor en la lista enlazada simple desordenada
@@ -304,13 +315,6 @@
             // Manejar la excepción capturada y mostrar dicho mensaje al usuario, todo esto utilizando la propiedad de Message
             mensajeError = ex.Message;
         }
-    }
-
-    // Metodo para ordenar la lista
-    private void OrdenarLista()
-    {
-        Mensaje = Lista.OrdenarLista();
-        mensajeError = MensajeValidator.MensajeOrdenar(Mensaje, mensajeError);
     }
 
     // Método para recorrer la lista de forma recursiva

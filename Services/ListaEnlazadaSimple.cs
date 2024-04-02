@@ -252,60 +252,7 @@ namespace Listas.Services
             return "¡Se ha eliminado el último nodo de la lista!";
         }
 
-        // Método para Eliminar un nodo en una posición específica
-        public string EliminarNodoEnPosicion(int posicion)
-        {
-            // Verificar si la lista está vacía
-            if (ListaVacia())
-            {
-                return "La lista está vacía";
-            }
-
-            // Verificar si la posición es inválida (menor o igual a cero)
-            if (posicion <= 0)
-            {
-                return "La posición especificada debe ser un número positivo y mayor que cero";
-            }
-
-            // Inicializar variables para recorrer la lista
-            Nodo? nodoActual = PrimerNodo;  // Nodo actual iniciado desde el primer nodo
-            Nodo? nodoAnterior = null;      // Nodo anterior inicializado como nulo, se usará para mantener la referencia al nodo anterior durante el recorrido
-            int index = 1;                 // Índice para mantener el seguimiento de la posición actual en la lista
-
-            // Recorrer la lista hasta encontrar la posición deseada o hasta el final de la lista.
-            while (nodoActual != null && index < posicion)
-            {
-                nodoAnterior = nodoActual;        // Mantener la referencia al nodo anterior
-                nodoActual = nodoActual.Referencia;  // Avanzar al siguiente nodo
-                index++;                          // Incrementar el índice
-            }
-
-            // Si  nodoActual == nulo , significa que la posición especificada está fuera de rango
-            if (nodoActual == null)
-            {
-                return "La posición especificada está fuera de rango";
-            }
-
-            // Si  nodoAnterior !=  nulo, significa que no estamos eliminando el primer nodo
-            if (nodoAnterior != null)
-            {
-                nodoAnterior.Referencia = nodoActual.Referencia;  // Eliminar el nodo actual actualizando las referencias del nodo anterior
-            }
-            else
-            {
-                // Si  nodoAnterior == nulo, significa que estamos eliminando el primer nodo de la lista
-                PrimerNodo = nodoActual.Referencia;  // Actualizar el primer nodo para que apunte al siguiente nodo
-            }
-
-            // Si  nodoActual es el último nodo de la lista, actualizar el último nodo
-            if (nodoActual == UltimoNodo)
-            {
-                UltimoNodo = nodoAnterior;  // El nodo anterior se convierte en el último nodo
-            }
-
-            return $"¡Se ha eliminado el nodo en la posicion {posicion} correctamente!";
-        }
-
+        // Método para Eliminar un nodo antes de una posición específica
         public string EliminarNodoAntesDe(int posicion)
         {
             if (ListaVacia() || posicion <= 1)
@@ -376,27 +323,58 @@ namespace Listas.Services
             return $"¡Se ha eliminado el Nodo despues de la {posicion} Exitosamente";
         }
 
-        //Metodo para buscar un nodo por su valor en una lista enlazada simple desordenada
-        public Nodo? BuscarNodoPorValor(string elemento)
+        // Método para Eliminar un nodo en una posición específica
+        public string EliminarNodoEnPosicion(int posicion)
         {
-            // Se declara e inicializa la variable auxiliar y el índice de posición
-            dynamic? nodoActual = PrimerNodo;
-            int index = 1;
-
-            // Recorre la lista hasta encontrar el nodo con el valor especificado o hasta el final de la lista
-            while (nodoActual != null)
+            // Verificar si la lista está vacía
+            if (ListaVacia())
             {
-                if (nodoActual.Informacion.ToString() == elemento)
-                {
-                    nodoActual.Posicion = index;
-                    return nodoActual;
-                }
-
-                nodoActual = nodoActual.Referencia;
-                index++;
+                return "La lista está vacía";
             }
 
-            return null;
+            // Verificar si la posición es inválida (menor o igual a cero)
+            if (posicion <= 0)
+            {
+                return "La posición especificada debe ser un número positivo y mayor que cero";
+            }
+
+            // Inicializar variables para recorrer la lista
+            Nodo? nodoActual = PrimerNodo;  // Nodo actual iniciado desde el primer nodo
+            Nodo? nodoAnterior = null;      // Nodo anterior inicializado como nulo, se usará para mantener la referencia al nodo anterior durante el recorrido
+            int index = 1;                 // Índice para mantener el seguimiento de la posición actual en la lista
+
+            // Recorrer la lista hasta encontrar la posición deseada o hasta el final de la lista.
+            while (nodoActual != null && index < posicion)
+            {
+                nodoAnterior = nodoActual;        // Mantener la referencia al nodo anterior
+                nodoActual = nodoActual.Referencia;  // Avanzar al siguiente nodo
+                index++;                          // Incrementar el índice
+            }
+
+            // Si  nodoActual == nulo , significa que la posición especificada está fuera de rango
+            if (nodoActual == null)
+            {
+                return "La posición especificada está fuera de rango";
+            }
+
+            // Si  nodoAnterior !=  nulo, significa que no estamos eliminando el primer nodo
+            if (nodoAnterior != null)
+            {
+                nodoAnterior.Referencia = nodoActual.Referencia;  // Eliminar el nodo actual actualizando las referencias del nodo anterior
+            }
+            else
+            {
+                // Si  nodoAnterior == nulo, significa que estamos eliminando el primer nodo de la lista
+                PrimerNodo = nodoActual.Referencia;  // Actualizar el primer nodo para que apunte al siguiente nodo
+            }
+
+            // Si  nodoActual es el último nodo de la lista, actualizar el último nodo
+            if (nodoActual == UltimoNodo)
+            {
+                UltimoNodo = nodoAnterior;  // El nodo anterior se convierte en el último nodo
+            }
+
+            return $"¡Se ha eliminado el nodo en la posicion {posicion} correctamente!";
         }
 
         // Metodo para ordenar en orden alfabetico la lista
@@ -460,6 +438,30 @@ namespace Listas.Services
             return "¡Lista ordenada ordenada correctamente!";
 
         }
+
+        //Metodo para buscar un nodo por su valor en una lista enlazada simple desordenada
+        public Nodo? BuscarNodoPorValor(string elemento)
+        {
+            // Se declara e inicializa la variable auxiliar y el índice de posición
+            dynamic? nodoActual = PrimerNodo;
+            int index = 1;
+
+            // Recorre la lista hasta encontrar el nodo con el valor especificado o hasta el final de la lista
+            while (nodoActual != null)
+            {
+                if (nodoActual.Informacion.ToString() == elemento)
+                {
+                    nodoActual.Posicion = index;
+                    return nodoActual;
+                }
+
+                nodoActual = nodoActual.Referencia;
+                index++;
+            }
+
+            return null;
+        }
+
 
         // Metodo para recorrer la lista recursivamente
         public static void RecorrerRecursivamente(Nodo? nodo, List<Nodo> nodos)
